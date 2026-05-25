@@ -76,9 +76,9 @@
   .mtag{font-size:11px;padding:4px 10px;border-radius:20px;background:var(--bg3);border:0.5px solid var(--border2);color:var(--text2);}
 
   /* COACH KAI */
-  .qps{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px;}
-  .qp{font-size:12px;padding:7px 14px;background:var(--bg3);border:0.5px solid var(--border2);border-radius:20px;color:var(--text2);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
-  .qp:hover{border-color:rgba(201,168,76,0.4);color:var(--gold2);}
+  .kai-btn{width:100%;padding:13px 16px;background:var(--bg3);border:0.5px solid var(--border2);border-radius:12px;color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;text-align:left;transition:all 0.2s;font-weight:400;}
+  .kai-btn:hover{border-color:rgba(201,168,76,0.4);color:var(--gold2);background:var(--gold-dim);}
+  .kai-btn:active{transform:scale(0.98);}
   .coach-area{background:var(--card);border:0.5px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:14px;}
   .coach-hd{padding:15px 17px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;gap:11px;}
   .kavatar{width:38px;height:38px;border-radius:50%;background:var(--gold-dim);border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
@@ -193,13 +193,6 @@
 
   <!-- COACH KAI -->
   <div id="tab-coach" class="tab">
-    <div class="qps">
-      <button class="qp" onclick="sendQ('Como estou indo hoje, Kai?')">🌸 Como estou hoje?</button>
-      <button class="qp" onclick="sendQ('Qual hábito preciso de mais atenção?')">🎯 O que priorizar?</button>
-      <button class="qp" onclick="sendQ('Me dá uma reflexão Kaizen para hoje.')">💡 Reflexão do dia</button>
-      <button class="qp" onclick="sendQ('Estou me sentindo travada, me ajuda?')">🙏 Preciso de apoio</button>
-      <button class="qp" onclick="sendQ('Me conta algo sobre o método Kaizen para me inspirar.')">📖 Me inspira</button>
-    </div>
     <div class="coach-area">
       <div class="coach-hd">
         <div class="kavatar">🌿</div>
@@ -208,12 +201,25 @@
           <div class="kstatus">sua coach kaizen pessoal</div>
         </div>
       </div>
-      <div class="msgs" id="msgs">
-        <div class="msg ai">Oi Lele! 🌸 Que bom te ver por aqui. Estou pronta para celebrar seus hábitos de hoje e te apoiar no que precisar. Como você está se sentindo agora?</div>
-      </div>
-      <div class="cinput-row">
-        <input class="cinput" id="cinput" placeholder="Fale com a Kai..." onkeydown="if(event.key==='Enter')sendCoach()" />
-        <button class="sbtn" onclick="sendCoach()"><i class="ti ti-send" aria-hidden="true"></i></button>
+      <div style="padding:20px 16px;display:flex;flex-direction:column;gap:14px;">
+        <p style="font-size:13px;color:var(--text2);line-height:1.6;">A Kai te espera no Claude.ai! Clique em qualquer botão abaixo — ela já vai saber quantos hábitos você fez hoje e estará pronta para te apoiar. 🌸</p>
+
+        <div style="display:flex;flex-direction:column;gap:9px;" id="kai-buttons">
+          <button class="kai-btn" onclick="abrirKai('Como estou indo hoje, Kai? Me conta sobre meu progresso.')">🌸 Como estou hoje?</button>
+          <button class="kai-btn" onclick="abrirKai('Qual hábito devo priorizar agora? Me ajuda a focar.')">🎯 O que priorizar?</button>
+          <button class="kai-btn" onclick="abrirKai('Me dá uma reflexão Kaizen para hoje. Quero me inspirar.')">💡 Reflexão do dia</button>
+          <button class="kai-btn" onclick="abrirKai('Estou me sentindo travada e desmotivada. Me ajuda, Kai?')">🙏 Preciso de apoio</button>
+          <button class="kai-btn" onclick="abrirKai('Me conta algo sobre o método Kaizen para me inspirar hoje.')">📖 Me inspira</button>
+          <button class="kai-btn" onclick="abrirKai('Quero fazer minha reflexão noturna. Me guia.')">🌙 Reflexão noturna</button>
+        </div>
+
+        <div style="background:var(--bg3);border:0.5px solid var(--border2);border-radius:12px;padding:14px;">
+          <p style="font-size:11px;color:var(--text3);margin-bottom:8px;letter-spacing:0.05em;text-transform:uppercase;">Ou escreva sua própria mensagem</p>
+          <div style="display:flex;gap:9px;align-items:center;">
+            <input class="cinput" id="cinput" placeholder="O que quer falar com a Kai?" style="flex:1;" />
+            <button class="sbtn" onclick="abrirKaiCustom()"><i class="ti ti-external-link" aria-hidden="true"></i></button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -280,7 +286,6 @@ const MOMENTS = [
   {time:'22:00',col:'#7b5ea7',title:'Fechamento do ciclo',desc:'Reflexão noturna: o que foi bem hoje? O que você quer carregar amanhã?',hab:['Reflexão Noturna']},
 ];
 
-const KAI_SYSTEM = `Você é Kai, a coach kaizen calorosa e pessoal da Lele. A Lele tem 12 hábitos diários: gratidão+reiki+ho'oponopono, floral+alongamento+meditação, treino Iron Ice, áudio book, aula mestre, leitura, manga virtual, reflexão noturna, Win Hoff, agradecer+rezar, crochê/pintura/violão, e cuidar da Afrodite (sua tartaruga de estimação). A Lele também escreve o blog "Entre-Fusos" sobre sua jornada de transformação pessoal. Responda sempre em português, de forma breve (2-4 frases), pessoal, calorosa e encorajadora. Use emojis com carinho. Chame-a sempre de Lele.`;
 
 /* ====== ESTADO (localStorage) ====== */
 const TODAY = new Date().toISOString().slice(0,10);
@@ -300,7 +305,6 @@ function getToday() {
 }
 
 /* ====== HÁBITOS ====== */
-let chatHistory = [];
 let isRec = false, recInt, recSecs = 0;
 
 function renderHabits() {
@@ -406,53 +410,25 @@ function renderMoments() {
 }
 
 /* ====== COACH KAI ====== */
-async function sendCoach() {
-  const input = document.getElementById('cinput');
-  const msgsEl = document.getElementById('msgs');
-  const txt = input.value.trim();
-  if (!txt) return;
-  input.value = '';
-  const um = document.createElement('div');
-  um.className = 'msg user';
-  um.textContent = txt;
-  msgsEl.appendChild(um);
-  const ld = document.createElement('div');
-  ld.className = 'msg ai loading';
-  ld.textContent = 'Kai está pensando...';
-  msgsEl.appendChild(ld);
-  msgsEl.scrollTop = msgsEl.scrollHeight;
-  chatHistory.push({role:'user', content: txt});
+function abrirKai(mensagem) {
   const state = getToday();
   const done = new Set(state.days[TODAY] || []);
   const names = [...done].map(id => HABITS.find(h => h.id === id)?.name).filter(Boolean);
-  const sysCtx = KAI_SYSTEM + ` Hábitos que Lele já completou hoje: ${names.join(', ') || 'nenhum ainda'} (${done.size} de 12).`;
-  try {
-    const r = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: sysCtx,
-        messages: [...chatHistory]
-      })
-    });
-    const data = await r.json();
-    const reply = data.content?.find(b => b.type === 'text')?.text || 'Estou aqui pra você, Lele! 🌸';
-    chatHistory.push({role:'assistant', content: reply});
-    ld.className = 'msg ai';
-    ld.textContent = reply;
-  } catch(e) {
-    ld.className = 'msg ai';
-    ld.textContent = 'Ops, preciso de internet para responder. Mas você está indo bem, Lele! 🌸';
-  }
-  msgsEl.scrollTop = msgsEl.scrollHeight;
+  const contexto = `Você é Kai, minha coach kaizen pessoal. Meus 12 hábitos são: gratidão+reiki+ho'oponopono, floral+alongamento+meditação, treino Iron Ice, áudio book, aula mestre, leitura, manga virtual, reflexão noturna, Win Hoff, agradecer+rezar, crochê/pintura/violão, e cuidar da Afrodite (minha tartaruga). Também escrevo o blog Entre-Fusos. Hoje completei ${done.size} de 12 hábitos${names.length ? ': ' + names.join(', ') : ''}. Me responda como Kai — calorosa, breve e encorajadora em português. ${mensagem}`;
+  const url = 'https://claude.ai/new?q=' + encodeURIComponent(contexto);
+  window.open(url, '_blank');
 }
 
-function sendQ(txt) {
-  document.getElementById('cinput').value = txt;
-  sendCoach();
+function abrirKaiCustom() {
+  const input = document.getElementById('cinput');
+  const txt = input.value.trim();
+  if (!txt) return;
+  input.value = '';
+  abrirKai(txt);
 }
+
+function sendQ(txt) { abrirKai(txt); }
+function sendCoach() { abrirKaiCustom(); }
 
 /* ====== NOTAS ====== */
 function loadNotes() {
