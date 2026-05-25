@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaizen Companion · Lele 🌸</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0f0e0c;--bg2:#1a1916;--bg3:#232220;--card:#1e1d1b;
+    --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.14);
+    --gold:#c9a84c;--gold2:#e8c97a;--gold-dim:rgba(201,168,76,0.15);
+    --text:#f0ece4;--text2:#a09a8e;--text3:#6b6560;
+    --green:#4CAF7D;--blue:#5b9bd5;--rose:#d47b7b;
+    --purple:#9b7fd4;--teal:#4cb8b8;--amber:#d4a44c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);}
+  .app{max-width:860px;margin:0 auto;padding:0 0 80px;}
+
+  /* HEADER */
+  .header{padding:24px 22px 18px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+  .logo{font-family:'Playfair Display',serif;font-size:24px;color:var(--gold2);}
+  .logo em{font-style:italic;font-size:13px;color:var(--text3);display:block;font-family:'DM Sans',sans-serif;font-weight:300;margin-top:3px;}
+  .badge{display:flex;align-items:center;gap:7px;background:var(--gold-dim);border:0.5px solid rgba(201,168,76,0.3);border-radius:20px;padding:7px 14px;font-size:13px;color:var(--gold2);font-weight:500;}
+
+  /* NAV */
+  .nav{display:flex;padding:0 22px;border-bottom:0.5px solid var(--border);overflow-x:auto;scrollbar-width:none;}
+  .nav::-webkit-scrollbar{display:none;}
+  .nav-btn{padding:14px 16px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text2);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-weight:400;}
+  .nav-btn.active{color:var(--gold2);border-bottom-color:var(--gold);font-weight:500;}
+  .nav-btn:hover:not(.active){color:var(--text);}
+
+  /* TABS */
+  .tab{display:none;padding:20px 22px;}
+  .tab.active{display:block;}
+  .sec{font-size:11px;letter-spacing:0.1em;color:var(--text3);text-transform:uppercase;margin-bottom:13px;}
+
+  /* PROGRESSO */
+  .prog-wrap{background:var(--card);border:0.5px solid var(--border);border-radius:14px;padding:16px;margin-bottom:18px;}
+  .prog-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+  .prog-lbl{font-size:13px;color:var(--text2);}
+  .prog-pct{font-size:22px;font-weight:500;color:var(--gold2);}
+  .prog-track{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;}
+  .prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:3px;transition:width 0.5s ease;}
+  .prog-msg{font-size:12px;color:var(--text3);margin-top:8px;font-style:italic;}
+
+  /* HABITS GRID */
+  .habits-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;}
+  @media(max-width:500px){.habits-grid{grid-template-columns:1fr;}}
+  .hcard{background:var(--card);border:0.5px solid var(--border);border-radius:14px;padding:14px;cursor:pointer;transition:all 0.25s;position:relative;overflow:hidden;user-select:none;}
+  .hcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--hc,var(--gold));opacity:0;transition:opacity 0.25s;}
+  .hcard.done::before{opacity:1;}
+  .hcard.done{background:var(--bg3);border-color:var(--border2);}
+  .hcard:active{transform:scale(0.98);}
+  .ht{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:9px;}
+  .hico{font-size:20px;width:36px;height:36px;border-radius:10px;background:var(--hbg,var(--gold-dim));display:flex;align-items:center;justify-content:center;}
+  .hchk{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;}
+  .hcard.done .hchk{background:var(--hc,var(--gold));border-color:var(--hc,var(--gold));}
+  .hchk i{font-size:13px;color:var(--bg);display:none;}
+  .hcard.done .hchk i{display:block;}
+  .hname{font-size:13px;font-weight:500;color:var(--text);line-height:1.35;margin-bottom:4px;}
+  .hstr{font-size:11px;color:var(--text3);}
+  .hcard.done .hstr{color:var(--hc,var(--gold));}
+
+  /* MOMENTOS */
+  .mlist{display:flex;flex-direction:column;gap:10px;}
+  .mcard{background:var(--card);border:0.5px solid var(--border);border-radius:14px;padding:15px;display:flex;gap:13px;align-items:flex-start;}
+  .mtime{font-size:11px;color:var(--text3);min-width:44px;padding-top:3px;letter-spacing:0.06em;flex-shrink:0;}
+  .mdot{width:10px;height:10px;border-radius:50%;margin-top:4px;flex-shrink:0;}
+  .mcont{flex:1;}
+  .mtitle{font-size:14px;font-weight:500;margin-bottom:5px;}
+  .mdesc{font-size:12px;color:var(--text2);line-height:1.55;}
+  .mtags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+  .mtag{font-size:11px;padding:4px 10px;border-radius:20px;background:var(--bg3);border:0.5px solid var(--border2);color:var(--text2);}
+
+  /* COACH KAI */
+  .qps{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px;}
+  .qp{font-size:12px;padding:7px 14px;background:var(--bg3);border:0.5px solid var(--border2);border-radius:20px;color:var(--text2);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+  .qp:hover{border-color:rgba(201,168,76,0.4);color:var(--gold2);}
+  .coach-area{background:var(--card);border:0.5px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:14px;}
+  .coach-hd{padding:15px 17px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;gap:11px;}
+  .kavatar{width:38px;height:38px;border-radius:50%;background:var(--gold-dim);border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+  .kname{font-size:14px;font-weight:500;color:var(--gold2);}
+  .kstatus{font-size:11px;color:var(--text3);}
+  .msgs{padding:15px;min-height:220px;max-height:360px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;}
+  .msgs::-webkit-scrollbar{width:3px;}
+  .msgs::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+  .msg{max-width:86%;padding:11px 14px;border-radius:14px;font-size:13px;line-height:1.55;}
+  .msg.ai{background:var(--bg3);border:0.5px solid var(--border);align-self:flex-start;border-radius:4px 14px 14px 14px;color:var(--text);}
+  .msg.user{background:var(--gold-dim);border:0.5px solid rgba(201,168,76,0.25);align-self:flex-end;border-radius:14px 4px 14px 14px;color:var(--gold2);}
+  .msg.loading{color:var(--text2);font-style:italic;}
+  .cinput-row{padding:12px 15px;border-top:0.5px solid var(--border);display:flex;gap:10px;align-items:center;}
+  .cinput{flex:1;background:var(--bg3);border:0.5px solid var(--border2);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s;}
+  .cinput:focus{border-color:rgba(201,168,76,0.4);}
+  .cinput::placeholder{color:var(--text3);}
+  .sbtn{width:38px;height:38px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s;}
+  .sbtn:hover{background:var(--gold2);}
+  .sbtn i{font-size:16px;color:var(--bg);}
+
+  /* NOTAS */
+  .vrec{background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:22px;display:flex;flex-direction:column;align-items:center;gap:14px;margin-bottom:15px;}
+  .rbtn{width:64px;height:64px;border-radius:50%;background:rgba(212,123,123,0.15);border:1.5px solid rgba(212,123,123,0.4);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;font-size:26px;}
+  .rbtn.rec{animation:pulse 1s ease-in-out infinite;border-color:var(--rose);}
+  @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.09);}}
+  .rtime{font-size:22px;font-weight:500;color:var(--text);font-variant-numeric:tabular-nums;}
+  .rlbl{font-size:13px;color:var(--text2);}
+  .nirow{display:flex;gap:10px;margin-bottom:15px;}
+  .ninput{flex:1;background:var(--card);border:0.5px solid var(--border);border-radius:12px;padding:12px 14px;font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif;outline:none;resize:none;height:60px;transition:border-color 0.2s;}
+  .ninput:focus{border-color:var(--border2);}
+  .ninput::placeholder{color:var(--text3);}
+  .nabtn{padding:10px 18px;background:var(--gold);border:none;border-radius:12px;color:var(--bg);font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;align-self:flex-end;}
+  .nabtn:hover{background:var(--gold2);}
+  .nlist{display:flex;flex-direction:column;gap:10px;margin-bottom:14px;}
+  .ncard{background:var(--card);border:0.5px solid var(--border);border-radius:14px;padding:14px;}
+  .nhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .ndate{font-size:11px;color:var(--text3);}
+  .ntype{font-size:11px;padding:3px 10px;border-radius:20px;}
+  .ntype.voice{background:rgba(91,155,213,0.15);color:var(--blue);border:0.5px solid rgba(91,155,213,0.3);}
+  .ntype.text{background:var(--gold-dim);color:var(--gold2);border:0.5px solid rgba(201,168,76,0.3);}
+  .ntext{font-size:13px;color:var(--text);line-height:1.55;}
+  .ntags{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap;}
+  .ntag{font-size:11px;color:var(--text3);}
+
+  /* PROGRESSO */
+  .sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px;}
+  .scard{background:var(--card);border:0.5px solid var(--border);border-radius:14px;padding:16px;text-align:center;}
+  .sval{font-family:'Playfair Display',serif;font-size:30px;font-weight:600;color:var(--gold2);display:block;line-height:1;margin-bottom:6px;}
+  .slbl{font-size:11px;color:var(--text3);letter-spacing:0.05em;}
+  .wchart{background:var(--card);border:0.5px solid var(--border);border-radius:14px;padding:16px;margin-bottom:18px;}
+  .wbars{display:flex;align-items:flex-end;justify-content:space-between;height:96px;gap:8px;margin-bottom:8px;}
+  .wcol{flex:1;display:flex;flex-direction:column;align-items:center;}
+  .wbwrap{flex:1;width:100%;background:var(--bg3);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;}
+  .wbfill{background:var(--gold);border-radius:6px;width:100%;transition:height 0.6s ease;}
+  .wday{font-size:11px;color:var(--text3);margin-top:6px;text-align:center;}
+  .wday.today{color:var(--gold2);font-weight:500;}
+  .hbdown{background:var(--card);border:0.5px solid var(--border);border-radius:14px;padding:16px;margin-bottom:18px;}
+  .hbrow{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--border);}
+  .hbrow:last-child{border-bottom:none;}
+  .hbico{font-size:15px;width:24px;text-align:center;flex-shrink:0;}
+  .hbname{flex:1;font-size:12px;color:var(--text);line-height:1.3;}
+  .hbbw{width:110px;height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;flex-shrink:0;}
+  .hbb{height:100%;border-radius:2px;}
+  .hbpct{font-size:11px;color:var(--text3);min-width:34px;text-align:right;}
+
+  /* RESET BTN */
+  .reset-row{display:flex;justify-content:flex-end;margin-bottom:14px;}
+  .reset-btn{font-size:12px;padding:6px 14px;background:transparent;border:0.5px solid var(--border2);border-radius:20px;color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+  .reset-btn:hover{color:var(--rose);border-color:rgba(212,123,123,0.4);}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="header">
+    <div>
+      <div class="logo">Kaizen <em>sua jornada, Lele 🌸</em></div>
+    </div>
+    <div class="badge">🔥 <span id="streak-lbl">carregando...</span></div>
+  </div>
+
+  <nav class="nav">
+    <button class="nav-btn active" onclick="showTab('habitos',this)">Hábitos</button>
+    <button class="nav-btn" onclick="showTab('momentos',this)">Momentos</button>
+    <button class="nav-btn" onclick="showTab('coach',this)">Kai Coach</button>
+    <button class="nav-btn" onclick="showTab('notas',this)">Notas</button>
+    <button class="nav-btn" onclick="showTab('progresso',this)">Progresso</button>
+  </nav>
+
+  <!-- HÁBITOS -->
+  <div id="tab-habitos" class="tab active">
+    <div class="reset-row">
+      <button class="reset-btn" onclick="resetDay()">↺ Novo dia</button>
+    </div>
+    <div class="prog-wrap">
+      <div class="prog-head">
+        <span class="prog-lbl">Check-in de hoje</span>
+        <span class="prog-pct" id="pct">0%</span>
+      </div>
+      <div class="prog-track"><div class="prog-fill" id="pfill" style="width:0%"></div></div>
+      <div class="prog-msg" id="prog-msg">Toque em cada hábito ao completar 💛</div>
+    </div>
+    <p class="sec">12 Hábitos</p>
+    <div class="habits-grid" id="hgrid"></div>
+  </div>
+
+  <!-- MOMENTOS -->
+  <div id="tab-momentos" class="tab">
+    <p class="sec" style="margin-bottom:15px;">Seus momentos do dia</p>
+    <div class="mlist" id="mlist"></div>
+  </div>
+
+  <!-- COACH KAI -->
+  <div id="tab-coach" class="tab">
+    <div class="qps">
+      <button class="qp" onclick="sendQ('Como estou indo hoje, Kai?')">🌸 Como estou hoje?</button>
+      <button class="qp" onclick="sendQ('Qual hábito preciso de mais atenção?')">🎯 O que priorizar?</button>
+      <button class="qp" onclick="sendQ('Me dá uma reflexão Kaizen para hoje.')">💡 Reflexão do dia</button>
+      <button class="qp" onclick="sendQ('Estou me sentindo travada, me ajuda?')">🙏 Preciso de apoio</button>
+      <button class="qp" onclick="sendQ('Me conta algo sobre o método Kaizen para me inspirar.')">📖 Me inspira</button>
+    </div>
+    <div class="coach-area">
+      <div class="coach-hd">
+        <div class="kavatar">🌿</div>
+        <div>
+          <div class="kname">Kai</div>
+          <div class="kstatus">sua coach kaizen pessoal</div>
+        </div>
+      </div>
+      <div class="msgs" id="msgs">
+        <div class="msg ai">Oi Lele! 🌸 Que bom te ver por aqui. Estou pronta para celebrar seus hábitos de hoje e te apoiar no que precisar. Como você está se sentindo agora?</div>
+      </div>
+      <div class="cinput-row">
+        <input class="cinput" id="cinput" placeholder="Fale com a Kai..." onkeydown="if(event.key==='Enter')sendCoach()" />
+        <button class="sbtn" onclick="sendCoach()"><i class="ti ti-send" aria-hidden="true"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTAS -->
+  <div id="tab-notas" class="tab">
+    <div class="vrec">
+      <button class="rbtn" id="rbtn" onclick="toggleRec()">🎙️</button>
+      <div class="rtime" id="rtime">0:00</div>
+      <div class="rlbl" id="rlbl">Toque para gravar uma nota de voz</div>
+    </div>
+    <div class="nirow">
+      <textarea class="ninput" id="ntext" placeholder="Ou escreva uma nota rápida..."></textarea>
+      <button class="nabtn" onclick="addNote()">Salvar</button>
+    </div>
+    <p class="sec" style="margin-bottom:11px;">Notas salvas</p>
+    <div class="nlist" id="nlist"></div>
+  </div>
+
+  <!-- PROGRESSO -->
+  <div id="tab-progresso" class="tab">
+    <div class="sgrid">
+      <div class="scard"><span class="sval" id="sv-streak">-</span><div class="slbl">DIAS SEGUIDOS</div></div>
+      <div class="scard"><span class="sval" id="sv-today">0</span><div class="slbl">HOJE</div></div>
+      <div class="scard"><span class="sval" id="sv-best">-</span><div class="slbl">MELHOR DIA</div></div>
+    </div>
+    <div class="wchart">
+      <p class="sec" style="margin-bottom:14px;">Últimos 7 dias</p>
+      <div class="wbars" id="wbars"></div>
+      <div style="display:flex;justify-content:space-between;gap:8px;" id="wdays"></div>
+    </div>
+    <div class="hbdown">
+      <p class="sec" style="margin-bottom:12px;">Consistência por hábito (7 dias)</p>
+      <div id="hblist"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ====== DADOS ====== */
+const HABITS = [
+  {id:1, name:"Gratidão + Reiki + Ho'oponopono", icon:'🙏', c:'#c9a84c', bg:'rgba(201,168,76,0.15)', baseStreak:7},
+  {id:2, name:'Floral + Alongamento + Meditação',  icon:'🌸', c:'#9b7fd4', bg:'rgba(155,127,212,0.15)', baseStreak:5},
+  {id:3, name:'Treino Iron Ice',                   icon:'❄️', c:'#5b9bd5', bg:'rgba(91,155,213,0.15)',  baseStreak:7},
+  {id:4, name:'Áudio Book',                        icon:'🎧', c:'#4cb8b8', bg:'rgba(76,184,184,0.15)',  baseStreak:4},
+  {id:5, name:'Aula Mestre',                       icon:'🎓', c:'#d4a44c', bg:'rgba(212,164,76,0.15)',  baseStreak:3},
+  {id:6, name:'Leitura',                           icon:'📖', c:'#4CAF7D', bg:'rgba(76,175,125,0.15)',  baseStreak:6},
+  {id:7, name:'Manga Virtual',                     icon:'🎌', c:'#d47b7b', bg:'rgba(212,123,123,0.15)', baseStreak:2},
+  {id:8, name:'Reflexão Noturna',                  icon:'🌙', c:'#7b5ea7', bg:'rgba(123,94,167,0.15)',  baseStreak:7},
+  {id:9, name:'Win Hoff',                          icon:'🌬️', c:'#4cb8b8', bg:'rgba(76,184,184,0.15)',  baseStreak:5},
+  {id:10,name:'Agradecer + Rezar',                 icon:'✨', c:'#c9a84c', bg:'rgba(201,168,76,0.15)',  baseStreak:7},
+  {id:11,name:'Crochê / Pintura / Violão',         icon:'🎨', c:'#d47b7b', bg:'rgba(212,123,123,0.15)', baseStreak:3},
+  {id:12,name:'Afrodite 🐢',                       icon:'🐢', c:'#4CAF7D', bg:'rgba(76,175,125,0.15)',  baseStreak:6},
+];
+
+const MOMENTS = [
+  {time:'06:00',col:'#c9a84c',title:'Despertar sagrado',desc:"Comece com gratidão, reiki e ho'oponopono. Limpe e eleve a energia para o dia.",hab:["Gratidão + Reiki","Agradecer + Rezar"]},
+  {time:'07:00',col:'#9b7fd4',title:'Ritual do corpo e espírito',desc:'Flores de Bach, alongamento e meditação. Prepare corpo e mente com gentileza.',hab:['Floral + Alongamento + Meditação','Win Hoff']},
+  {time:'08:30',col:'#5b9bd5',title:'Movimento e força',desc:'Treino Iron Ice para ativar o corpo e a disciplina interior.',hab:['Treino Iron Ice']},
+  {time:'10:00',col:'#4cb8b8',title:'Nutrindo a mente',desc:'Áudio book ou aula mestre enquanto descansa ou faz algo leve.',hab:['Áudio Book','Aula Mestre']},
+  {time:'14:00',col:'#4CAF7D',title:'Leitura e cultura',desc:'Leitura e manga virtual — alimento criativo e imaginativo da tarde.',hab:['Leitura','Manga Virtual']},
+  {time:'19:00',col:'#d47b7b',title:'Arte e presença',desc:'Crochê, pintura ou violão — expressão criativa e presença plena.',hab:['Crochê / Pintura / Violão','Afrodite 🐢']},
+  {time:'22:00',col:'#7b5ea7',title:'Fechamento do ciclo',desc:'Reflexão noturna: o que foi bem hoje? O que você quer carregar amanhã?',hab:['Reflexão Noturna']},
+];
+
+const KAI_SYSTEM = `Você é Kai, a coach kaizen calorosa e pessoal da Lele. A Lele tem 12 hábitos diários: gratidão+reiki+ho'oponopono, floral+alongamento+meditação, treino Iron Ice, áudio book, aula mestre, leitura, manga virtual, reflexão noturna, Win Hoff, agradecer+rezar, crochê/pintura/violão, e cuidar da Afrodite (sua tartaruga de estimação). A Lele também escreve o blog "Entre-Fusos" sobre sua jornada de transformação pessoal. Responda sempre em português, de forma breve (2-4 frases), pessoal, calorosa e encorajadora. Use emojis com carinho. Chame-a sempre de Lele.`;
+
+/* ====== ESTADO (localStorage) ====== */
+const TODAY = new Date().toISOString().slice(0,10);
+
+function loadState() {
+  try { return JSON.parse(localStorage.getItem('kaizen_lele') || '{}'); } catch(e) { return {}; }
+}
+function saveState(state) {
+  localStorage.setItem('kaizen_lele', JSON.stringify(state));
+}
+
+function getToday() {
+  const state = loadState();
+  if (!state.days) state.days = {};
+  if (!state.days[TODAY]) state.days[TODAY] = [];
+  return state;
+}
+
+/* ====== HÁBITOS ====== */
+let chatHistory = [];
+let isRec = false, recInt, recSecs = 0;
+
+function renderHabits() {
+  const state = getToday();
+  const done = new Set(state.days[TODAY] || []);
+  const g = document.getElementById('hgrid');
+  g.innerHTML = '';
+  HABITS.forEach(h => {
+    const d = done.has(h.id);
+    const el = document.createElement('div');
+    el.className = 'hcard' + (d ? ' done' : '');
+    el.style.setProperty('--hc', h.c);
+    el.style.setProperty('--hbg', h.bg);
+    const streakDays = getStreak(h.id, state);
+    el.innerHTML = `
+      <div class="ht">
+        <div class="hico">${h.icon}</div>
+        <div class="hchk"><i class="ti ti-check"></i></div>
+      </div>
+      <div class="hname">${h.name}</div>
+      <div class="hstr">${d ? '✓ feito hoje' : '🔥 ' + streakDays + ' dias'}</div>`;
+    el.onclick = () => toggleHabit(h.id);
+    g.appendChild(el);
+  });
+  updateProgress(done.size);
+}
+
+function toggleHabit(id) {
+  const state = getToday();
+  const done = new Set(state.days[TODAY] || []);
+  if (done.has(id)) done.delete(id); else done.add(id);
+  state.days[TODAY] = [...done];
+  if (!state.streak) state.streak = 0;
+  if (!state.best) state.best = 0;
+  if (done.size > state.best) state.best = done.size;
+  saveState(state);
+  renderHabits();
+  updateStatsPanel();
+}
+
+function updateProgress(count) {
+  const pct = Math.round((count / 12) * 100);
+  document.getElementById('pct').textContent = pct + '%';
+  document.getElementById('pfill').style.width = pct + '%';
+  const msgs = ['Toque em cada hábito ao completar 💛','Ótimo começo, continue assim! 🌱','Você está no caminho! 💪','Mais da metade, incrível Lele! 🌸','Quase lá, força! ✨','Que dia poderoso! 🔥','Perfeito! Todos os 12 hábitos! 🏆'];
+  const idx = Math.min(Math.floor(pct / 17), 6);
+  document.getElementById('prog-msg').textContent = msgs[idx];
+  document.getElementById('sv-today').textContent = count;
+}
+
+function getStreak(habitId, state) {
+  if (!state.days) return HABITS.find(h => h.id === habitId)?.baseStreak || 0;
+  let streak = 0;
+  const d = new Date();
+  for (let i = 0; i < 30; i++) {
+    const key = new Date(d.getTime() - i * 86400000).toISOString().slice(0, 10);
+    if (state.days[key] && state.days[key].includes(habitId)) streak++;
+    else if (i > 0) break;
+  }
+  return streak || (HABITS.find(h => h.id === habitId)?.baseStreak || 0);
+}
+
+function calcStreak(state) {
+  if (!state.days) return 0;
+  let streak = 0;
+  const d = new Date();
+  for (let i = 0; i < 365; i++) {
+    const key = new Date(d.getTime() - i * 86400000).toISOString().slice(0, 10);
+    const count = (state.days[key] || []).length;
+    if (count >= 6) streak++;
+    else break;
+  }
+  return streak;
+}
+
+function resetDay() {
+  if (!confirm('Resetar os hábitos de hoje para um novo dia?')) return;
+  const state = loadState();
+  if (!state.days) state.days = {};
+  state.days[TODAY] = [];
+  saveState(state);
+  renderHabits();
+  updateStatsPanel();
+}
+
+/* ====== MOMENTOS ====== */
+function renderMoments() {
+  const el = document.getElementById('mlist');
+  el.innerHTML = '';
+  MOMENTS.forEach(m => {
+    const d = document.createElement('div');
+    d.className = 'mcard';
+    d.innerHTML = `
+      <div class="mtime">${m.time}</div>
+      <div class="mdot" style="background:${m.col}"></div>
+      <div class="mcont">
+        <div class="mtitle">${m.title}</div>
+        <div class="mdesc">${m.desc}</div>
+        <div class="mtags">${m.hab.map(h => `<span class="mtag">${h}</span>`).join('')}</div>
+      </div>`;
+    el.appendChild(d);
+  });
+}
+
+/* ====== COACH KAI ====== */
+async function sendCoach() {
+  const input = document.getElementById('cinput');
+  const msgsEl = document.getElementById('msgs');
+  const txt = input.value.trim();
+  if (!txt) return;
+  input.value = '';
+  const um = document.createElement('div');
+  um.className = 'msg user';
+  um.textContent = txt;
+  msgsEl.appendChild(um);
+  const ld = document.createElement('div');
+  ld.className = 'msg ai loading';
+  ld.textContent = 'Kai está pensando...';
+  msgsEl.appendChild(ld);
+  msgsEl.scrollTop = msgsEl.scrollHeight;
+  chatHistory.push({role:'user', content: txt});
+  const state = getToday();
+  const done = new Set(state.days[TODAY] || []);
+  const names = [...done].map(id => HABITS.find(h => h.id === id)?.name).filter(Boolean);
+  const sysCtx = KAI_SYSTEM + ` Hábitos que Lele já completou hoje: ${names.join(', ') || 'nenhum ainda'} (${done.size} de 12).`;
+  try {
+    const r = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: sysCtx,
+        messages: [...chatHistory]
+      })
+    });
+    const data = await r.json();
+    const reply = data.content?.find(b => b.type === 'text')?.text || 'Estou aqui pra você, Lele! 🌸';
+    chatHistory.push({role:'assistant', content: reply});
+    ld.className = 'msg ai';
+    ld.textContent = reply;
+  } catch(e) {
+    ld.className = 'msg ai';
+    ld.textContent = 'Ops, preciso de internet para responder. Mas você está indo bem, Lele! 🌸';
+  }
+  msgsEl.scrollTop = msgsEl.scrollHeight;
+}
+
+function sendQ(txt) {
+  document.getElementById('cinput').value = txt;
+  sendCoach();
+}
+
+/* ====== NOTAS ====== */
+function loadNotes() {
+  try { return JSON.parse(localStorage.getItem('kaizen_notes') || '[]'); } catch(e) { return []; }
+}
+function saveNotes(notes) {
+  localStorage.setItem('kaizen_notes', JSON.stringify(notes));
+}
+
+function renderNotes() {
+  const notes = loadNotes();
+  const el = document.getElementById('nlist');
+  el.innerHTML = '';
+  if (notes.length === 0) {
+    el.innerHTML = '<div style="font-size:13px;color:var(--text3);text-align:center;padding:20px 0;">Nenhuma nota ainda. Grave ou escreva a primeira! 🌸</div>';
+    return;
+  }
+  notes.forEach(n => {
+    const d = document.createElement('div');
+    d.className = 'ncard';
+    d.innerHTML = `
+      <div class="nhead">
+        <span class="ndate">${n.date}</span>
+        <span class="ntype ${n.type}">${n.type === 'voice' ? '🎙️ Voz' : '✏️ Texto'}</span>
+      </div>
+      <div class="ntext">${n.text}</div>
+      <div class="ntags">${(n.tags||[]).map(t => `<span class="ntag">${t}</span>`).join('')}</div>`;
+    el.appendChild(d);
+  });
+}
+
+function addNote() {
+  const input = document.getElementById('ntext');
+  const txt = input.value.trim();
+  if (!txt) return;
+  const now = new Date();
+  const ts = now.toLocaleDateString('pt-BR') + ', ' + now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0');
+  const notes = loadNotes();
+  notes.unshift({type:'text', date:ts, text:txt, tags:['#nota','#hoje']});
+  saveNotes(notes);
+  input.value = '';
+  renderNotes();
+}
+
+function toggleRec() {
+  const btn = document.getElementById('rbtn');
+  const lbl = document.getElementById('rlbl');
+  const time = document.getElementById('rtime');
+  if (!isRec) {
+    isRec = true; recSecs = 0;
+    btn.classList.add('rec'); btn.textContent = '⏹️';
+    lbl.textContent = 'Gravando... toque para parar';
+    recInt = setInterval(() => {
+      recSecs++;
+      const m = Math.floor(recSecs / 60), s = recSecs % 60;
+      time.textContent = m + ':' + String(s).padStart(2,'0');
+    }, 1000);
+  } else {
+    isRec = false; clearInterval(recInt);
+    btn.classList.remove('rec'); btn.textContent = '🎙️';
+    lbl.textContent = 'Toque para gravar uma nota de voz';
+    const dur = recSecs; time.textContent = '0:00';
+    if (dur > 1) {
+      const now = new Date();
+      const ts = now.toLocaleDateString('pt-BR') + ', ' + now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0');
+      const notes = loadNotes();
+      notes.unshift({type:'voice', date:ts, text:`Nota de voz gravada (${dur}s) — faça transcrição manual se quiser guardar o conteúdo.`, tags:['#voz','#hoje']});
+      saveNotes(notes);
+      renderNotes();
+    }
+  }
+}
+
+/* ====== PROGRESSO ====== */
+function updateStatsPanel() {
+  const state = loadState();
+  const streak = calcStreak(state);
+  const best = state.best || 0;
+  const done = (state.days && state.days[TODAY] ? state.days[TODAY].length : 0);
+  document.getElementById('sv-streak').textContent = streak;
+  document.getElementById('sv-today').textContent = done;
+  document.getElementById('sv-best').textContent = best;
+  document.getElementById('streak-lbl').textContent = streak + (streak === 1 ? ' dia' : ' dias');
+  renderWeek(state);
+  renderBreakdown(state);
+}
+
+function renderWeek(state) {
+  const bars = document.getElementById('wbars');
+  const days = document.getElementById('wdays');
+  bars.innerHTML = ''; days.innerHTML = '';
+  const WDAYS = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+  const weekData = [];
+  const now = new Date();
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(now.getTime() - i * 86400000);
+    const key = d.toISOString().slice(0, 10);
+    const count = (state.days && state.days[key] ? state.days[key].length : 0);
+    weekData.push({count, day: WDAYS[d.getDay()], isToday: i === 0});
+  }
+  const max = Math.max(...weekData.map(w => w.count), 1);
+  weekData.forEach(w => {
+    const col = document.createElement('div');
+    col.className = 'wcol';
+    const h = Math.round((w.count / max) * 80) + (w.count > 0 ? 6 : 0);
+    col.innerHTML = `<div class="wbwrap"><div class="wbfill" style="height:${h}px;opacity:${w.isToday && w.count === 0 ? 0.2 : 1}"></div></div>`;
+    bars.appendChild(col);
+    const d = document.createElement('div');
+    d.className = 'wday' + (w.isToday ? ' today' : '');
+    d.textContent = w.day;
+    days.appendChild(d);
+  });
+}
+
+function renderBreakdown(state) {
+  const el = document.getElementById('hblist');
+  el.innerHTML = '';
+  const now = new Date();
+  HABITS.forEach(h => {
+    let count = 0;
+    for (let i = 0; i < 7; i++) {
+      const key = new Date(now.getTime() - i * 86400000).toISOString().slice(0, 10);
+      if (state.days && state.days[key] && state.days[key].includes(h.id)) count++;
+    }
+    const pct = Math.round((count / 7) * 100);
+    const d = document.createElement('div');
+    d.className = 'hbrow';
+    d.innerHTML = `
+      <div class="hbico">${h.icon}</div>
+      <div class="hbname">${h.name}</div>
+      <div class="hbbw"><div class="hbb" style="width:${pct}%;background:${h.c}"></div></div>
+      <div class="hbpct">${pct}%</div>`;
+    el.appendChild(d);
+  });
+}
+
+/* ====== NAV ====== */
+function showTab(name, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+/* ====== INIT ====== */
+renderHabits();
+renderMoments();
+renderNotes();
+updateStatsPanel();
+</script>
+</body>
+</html>
