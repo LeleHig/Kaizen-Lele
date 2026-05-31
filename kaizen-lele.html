@@ -14,6 +14,7 @@
     --text:#f0ece4;--text2:#a09a8e;--text3:#6b6560;
     --green:#4CAF7D;--blue:#5b9bd5;--rose:#d47b7b;
     --purple:#9b7fd4;--teal:#4cb8b8;--amber:#d4a44c;
+    --morning:#e8c97a;--afternoon:#5b9bd5;--night:#9b7fd4;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);}
@@ -46,8 +47,24 @@
   .prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:3px;transition:width 0.5s ease;}
   .prog-msg{font-size:12px;color:var(--text3);margin-top:8px;font-style:italic;}
 
+  /* BLOCOS DO DIA */
+  .block-section{margin-bottom:22px;}
+  .block-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding:10px 14px;border-radius:12px;border:0.5px solid var(--border);}
+  .block-header.manha{background:rgba(232,201,122,0.07);border-color:rgba(232,201,122,0.2);}
+  .block-header.tarde{background:rgba(91,155,213,0.07);border-color:rgba(91,155,213,0.2);}
+  .block-header.noite{background:rgba(155,127,212,0.07);border-color:rgba(155,127,212,0.2);}
+  .block-title{font-size:13px;font-weight:500;letter-spacing:0.05em;}
+  .block-title.manha{color:var(--morning);}
+  .block-title.tarde{color:var(--afternoon);}
+  .block-title.noite{color:var(--night);}
+  .block-count{font-size:11px;color:var(--text3);margin-left:auto;}
+  .block-prog{font-size:11px;font-weight:500;margin-left:6px;}
+  .block-prog.manha{color:var(--morning);}
+  .block-prog.tarde{color:var(--afternoon);}
+  .block-prog.noite{color:var(--night);}
+
   /* HABITS GRID */
-  .habits-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;}
+  .habits-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
   @media(max-width:500px){.habits-grid{grid-template-columns:1fr;}}
   .hcard{background:var(--card);border:0.5px solid var(--border);border-radius:14px;padding:14px;cursor:pointer;transition:all 0.25s;position:relative;overflow:hidden;user-select:none;}
   .hcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--hc,var(--gold));opacity:0;transition:opacity 0.25s;}
@@ -84,14 +101,6 @@
   .kavatar{width:38px;height:38px;border-radius:50%;background:var(--gold-dim);border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
   .kname{font-size:14px;font-weight:500;color:var(--gold2);}
   .kstatus{font-size:11px;color:var(--text3);}
-  .msgs{padding:15px;min-height:220px;max-height:360px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;}
-  .msgs::-webkit-scrollbar{width:3px;}
-  .msgs::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
-  .msg{max-width:86%;padding:11px 14px;border-radius:14px;font-size:13px;line-height:1.55;}
-  .msg.ai{background:var(--bg3);border:0.5px solid var(--border);align-self:flex-start;border-radius:4px 14px 14px 14px;color:var(--text);}
-  .msg.user{background:var(--gold-dim);border:0.5px solid rgba(201,168,76,0.25);align-self:flex-end;border-radius:14px 4px 14px 14px;color:var(--gold2);}
-  .msg.loading{color:var(--text2);font-style:italic;}
-  .cinput-row{padding:12px 15px;border-top:0.5px solid var(--border);display:flex;gap:10px;align-items:center;}
   .cinput{flex:1;background:var(--bg3);border:0.5px solid var(--border2);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s;}
   .cinput:focus{border-color:rgba(201,168,76,0.4);}
   .cinput::placeholder{color:var(--text3);}
@@ -181,8 +190,7 @@
       <div class="prog-track"><div class="prog-fill" id="pfill" style="width:0%"></div></div>
       <div class="prog-msg" id="prog-msg">Toque em cada hábito ao completar 💛</div>
     </div>
-    <p class="sec">12 Hábitos</p>
-    <div class="habits-grid" id="hgrid"></div>
+    <div id="hgrid"></div>
   </div>
 
   <!-- MOMENTOS -->
@@ -203,7 +211,6 @@
       </div>
       <div style="padding:20px 16px;display:flex;flex-direction:column;gap:14px;">
         <p style="font-size:13px;color:var(--text2);line-height:1.6;">A Kai te espera no Claude.ai! Clique em qualquer botão abaixo — ela já vai saber quantos hábitos você fez hoje e estará pronta para te apoiar. 🌸</p>
-
         <div style="display:flex;flex-direction:column;gap:9px;" id="kai-buttons">
           <button class="kai-btn" onclick="abrirKai('Como estou indo hoje, Kai? Me conta sobre meu progresso.')">🌸 Como estou hoje?</button>
           <button class="kai-btn" onclick="abrirKai('Qual hábito devo priorizar agora? Me ajuda a focar.')">🎯 O que priorizar?</button>
@@ -212,7 +219,6 @@
           <button class="kai-btn" onclick="abrirKai('Me conta algo sobre o método Kaizen para me inspirar hoje.')">📖 Me inspira</button>
           <button class="kai-btn" onclick="abrirKai('Quero fazer minha reflexão noturna. Me guia.')">🌙 Reflexão noturna</button>
         </div>
-
         <div style="background:var(--bg3);border:0.5px solid var(--border2);border-radius:12px;padding:14px;">
           <p style="font-size:11px;color:var(--text3);margin-bottom:8px;letter-spacing:0.05em;text-transform:uppercase;">Ou escreva sua própria mensagem</p>
           <div style="display:flex;gap:9px;align-items:center;">
@@ -261,31 +267,66 @@
 
 <script>
 /* ====== DADOS ====== */
-const HABITS = [
-  {id:1, name:"Gratidão + Reiki + Ho'oponopono", icon:'🙏', c:'#c9a84c', bg:'rgba(201,168,76,0.15)', baseStreak:7},
-  {id:2, name:'Floral + Alongamento + Meditação',  icon:'🌸', c:'#9b7fd4', bg:'rgba(155,127,212,0.15)', baseStreak:5},
-  {id:3, name:'Treino Iron Ice',                   icon:'❄️', c:'#5b9bd5', bg:'rgba(91,155,213,0.15)',  baseStreak:7},
-  {id:4, name:'Áudio Book',                        icon:'🎧', c:'#4cb8b8', bg:'rgba(76,184,184,0.15)',  baseStreak:4},
-  {id:5, name:'Aula Mestre',                       icon:'🎓', c:'#d4a44c', bg:'rgba(212,164,76,0.15)',  baseStreak:3},
-  {id:6, name:'Leitura',                           icon:'📖', c:'#4CAF7D', bg:'rgba(76,175,125,0.15)',  baseStreak:6},
-  {id:7, name:'Manga Virtual',                     icon:'🎌', c:'#d47b7b', bg:'rgba(212,123,123,0.15)', baseStreak:2},
-  {id:8, name:'Reflexão Noturna',                  icon:'🌙', c:'#7b5ea7', bg:'rgba(123,94,167,0.15)',  baseStreak:7},
-  {id:9, name:'Win Hoff',                          icon:'🌬️', c:'#4cb8b8', bg:'rgba(76,184,184,0.15)',  baseStreak:5},
-  {id:10,name:'Agradecer + Rezar',                 icon:'✨', c:'#c9a84c', bg:'rgba(201,168,76,0.15)',  baseStreak:7},
-  {id:11,name:'Crochê / Pintura / Violão',         icon:'🎨', c:'#d47b7b', bg:'rgba(212,123,123,0.15)', baseStreak:3},
-  {id:12,name:'Afrodite 🐢',                       icon:'🐢', c:'#4CAF7D', bg:'rgba(76,175,125,0.15)',  baseStreak:6},
+const BLOCKS = [
+  {
+    id: 'manha',
+    label: '🌅 Manhã — Meu Momento',
+    cls: 'manha',
+    habits: [
+      {id:1,  name:'Acordar às 5am',                      icon:'⏰', c:'#c9a84c', bg:'rgba(201,168,76,0.15)',   baseStreak:7},
+      {id:2,  name:'Agradecer pelo dia',                   icon:'✨', c:'#c9a84c', bg:'rgba(201,168,76,0.15)',   baseStreak:7},
+      {id:3,  name:'Floral / Meditar / Rezar / Alongar',   icon:'🌸', c:'#9b7fd4', bg:'rgba(155,127,212,0.15)', baseStreak:5},
+      {id:4,  name:'Chá',                                  icon:'🍵', c:'#4CAF7D', bg:'rgba(76,175,125,0.15)',  baseStreak:6},
+      {id:5,  name:'Curso de Mestre',                      icon:'🎓', c:'#d4a44c', bg:'rgba(212,164,76,0.15)',  baseStreak:3},
+      {id:6,  name:'Café da manhã',                        icon:'🥣', c:'#d4a44c', bg:'rgba(212,164,76,0.15)',  baseStreak:7},
+      {id:7,  name:'Escutar um livro',                     icon:'🎧', c:'#4cb8b8', bg:'rgba(76,184,184,0.15)',  baseStreak:4},
+      {id:8,  name:'Organizar a casa',                     icon:'🏡', c:'#4CAF7D', bg:'rgba(76,175,125,0.15)',  baseStreak:5},
+      {id:9,  name:'Arrumar para o esporte',               icon:'👟', c:'#5b9bd5', bg:'rgba(91,155,213,0.15)',  baseStreak:6},
+      {id:10, name:'Treino / Gelo',                        icon:'❄️', c:'#5b9bd5', bg:'rgba(91,155,213,0.15)',  baseStreak:7},
+    ]
+  },
+  {
+    id: 'tarde',
+    label: '☀️ Tarde — Trabalho & Almoço',
+    cls: 'tarde',
+    habits: [
+      {id:11, name:'Afrodite 🐢 — Meditação nas pedras',   icon:'🌊', c:'#4CAF7D', bg:'rgba(76,175,125,0.15)',  baseStreak:6},
+      {id:12, name:'Wim Hof',                              icon:'🌬️', c:'#4cb8b8', bg:'rgba(76,184,184,0.15)',  baseStreak:5},
+      {id:13, name:'Soneca',                               icon:'😴', c:'#7b5ea7', bg:'rgba(123,94,167,0.15)',  baseStreak:4},
+    ]
+  },
+  {
+    id: 'noite',
+    label: '🌙 Noite — Meu Momento',
+    cls: 'noite',
+    habits: [
+      {id:14, name:'Aula de idiomas',                      icon:'🗣️', c:'#d4a44c', bg:'rgba(212,164,76,0.15)',  baseStreak:5},
+      {id:15, name:'Crochê',                               icon:'🎨', c:'#d47b7b', bg:'rgba(212,123,123,0.15)', baseStreak:3},
+      {id:16, name:'Ler um livro',                         icon:'📖', c:'#4CAF7D', bg:'rgba(76,175,125,0.15)',  baseStreak:6},
+      {id:17, name:'Mangá Virtual',                        icon:'🎌', c:'#d47b7b', bg:'rgba(212,123,123,0.15)', baseStreak:2},
+      {id:18, name:'Escrever no blog',                     icon:'✍️', c:'#9b7fd4', bg:'rgba(155,127,212,0.15)', baseStreak:3},
+      {id:19, name:'Cuidados pessoais',                    icon:'🌺', c:'#d47b7b', bg:'rgba(212,123,123,0.15)', baseStreak:7},
+      {id:20, name:'Reflexão Noturna',                     icon:'🌙', c:'#7b5ea7', bg:'rgba(123,94,167,0.15)',  baseStreak:7},
+      {id:21, name:'Floral / Meditar / Rezar / Alongar',   icon:'🌸', c:'#9b7fd4', bg:'rgba(155,127,212,0.15)', baseStreak:5},
+      {id:22, name:'Dormir',                               icon:'🛌', c:'#7b5ea7', bg:'rgba(123,94,167,0.15)',  baseStreak:7},
+    ]
+  }
 ];
+
+const HABITS = BLOCKS.flatMap(b => b.habits);
+const TOTAL = HABITS.length;
 
 const MOMENTS = [
-  {time:'06:00',col:'#c9a84c',title:'Despertar sagrado',desc:"Comece com gratidão, reiki e ho'oponopono. Limpe e eleve a energia para o dia.",hab:["Gratidão + Reiki","Agradecer + Rezar"]},
-  {time:'07:00',col:'#9b7fd4',title:'Ritual do corpo e espírito',desc:'Flores de Bach, alongamento e meditação. Prepare corpo e mente com gentileza.',hab:['Floral + Alongamento + Meditação','Win Hoff']},
-  {time:'08:30',col:'#5b9bd5',title:'Movimento e força',desc:'Treino Iron Ice para ativar o corpo e a disciplina interior.',hab:['Treino Iron Ice']},
-  {time:'10:00',col:'#4cb8b8',title:'Nutrindo a mente',desc:'Áudio book ou aula mestre enquanto descansa ou faz algo leve.',hab:['Áudio Book','Aula Mestre']},
-  {time:'14:00',col:'#4CAF7D',title:'Leitura e cultura',desc:'Leitura e manga virtual — alimento criativo e imaginativo da tarde.',hab:['Leitura','Manga Virtual']},
-  {time:'19:00',col:'#d47b7b',title:'Arte e presença',desc:'Crochê, pintura ou violão — expressão criativa e presença plena.',hab:['Crochê / Pintura / Violão','Afrodite 🐢']},
-  {time:'22:00',col:'#7b5ea7',title:'Fechamento do ciclo',desc:'Reflexão noturna: o que foi bem hoje? O que você quer carregar amanhã?',hab:['Reflexão Noturna']},
+  {time:'05:00',col:'#c9a84c',title:'Despertar sagrado',desc:'Acordar às 5am, abrir os olhos com gratidão. Pedir sabedoria, proteção e bênçãos para o dia.',hab:['Acordar às 5am','Agradecer pelo dia']},
+  {time:'05:30',col:'#9b7fd4',title:'Ritual do espírito',desc:'Tomar o floral, sentar no tapete. Rezar, meditar e alongar com presença e gentileza.',hab:['Floral / Meditar / Rezar / Alongar']},
+  {time:'06:30',col:'#4CAF7D',title:'Chá & aprendizado',desc:'Fazer o chá, escutar um livro enquanto organiza a casa. Corpo em movimento, mente nutrida.',hab:['Chá','Escutar um livro','Organizar a casa']},
+  {time:'07:30',col:'#d4a44c',title:'Mente & café',desc:'Estudar para o curso de mestre. Depois, tomar o café da manhã com calma.',hab:['Curso de Mestre','Café da manhã']},
+  {time:'08:30',col:'#5b9bd5',title:'Força & frio',desc:'Se arrumar para o esporte. Treino e banho de gelo — disciplina que fortalece corpo e mente.',hab:['Arrumar para o esporte','Treino / Gelo']},
+  {time:'12:00',col:'#4CAF7D',title:'Afrodite nas pedras',desc:'Hora do almoço: respiração Wim Hof e meditação no mar com as tartarugas. Sagrado.',hab:['Afrodite 🐢 — Meditação nas pedras','Wim Hof']},
+  {time:'13:30',col:'#7b5ea7',title:'Soneca restauradora',desc:'Uma pausa para recarregar as energias antes da tarde.',hab:['Soneca']},
+  {time:'19:00',col:'#d4a44c',title:'Idiomas & criação',desc:'Aula de idiomas. Depois crochê, leitura, mangá ou escrever no blog — expressão e cultura.',hab:['Aula de idiomas','Crochê','Ler um livro','Mangá Virtual','Escrever no blog']},
+  {time:'21:30',col:'#7b5ea7',title:'Fechamento do ciclo',desc:'Cuidados pessoais, reflexão noturna, floral + meditação + alongar. Fechar o dia com gratidão.',hab:['Cuidados pessoais','Reflexão Noturna','Floral / Meditar / Rezar / Alongar','Dormir']},
 ];
-
 
 /* ====== ESTADO (localStorage) ====== */
 const TODAY = new Date().toISOString().slice(0,10);
@@ -296,7 +337,6 @@ function loadState() {
 function saveState(state) {
   localStorage.setItem('kaizen_lele', JSON.stringify(state));
 }
-
 function getToday() {
   const state = loadState();
   if (!state.days) state.days = {};
@@ -312,23 +352,45 @@ function renderHabits() {
   const done = new Set(state.days[TODAY] || []);
   const g = document.getElementById('hgrid');
   g.innerHTML = '';
-  HABITS.forEach(h => {
-    const d = done.has(h.id);
-    const el = document.createElement('div');
-    el.className = 'hcard' + (d ? ' done' : '');
-    el.style.setProperty('--hc', h.c);
-    el.style.setProperty('--hbg', h.bg);
-    const streakDays = getStreak(h.id, state);
-    el.innerHTML = `
-      <div class="ht">
-        <div class="hico">${h.icon}</div>
-        <div class="hchk"><i class="ti ti-check"></i></div>
-      </div>
-      <div class="hname">${h.name}</div>
-      <div class="hstr">${d ? '✓ feito hoje' : '🔥 ' + streakDays + ' dias'}</div>`;
-    el.onclick = () => toggleHabit(h.id);
-    g.appendChild(el);
+
+  BLOCKS.forEach(block => {
+    const blockDone = block.habits.filter(h => done.has(h.id)).length;
+    const section = document.createElement('div');
+    section.className = 'block-section';
+
+    const header = document.createElement('div');
+    header.className = `block-header ${block.cls}`;
+    header.innerHTML = `
+      <span class="block-title ${block.cls}">${block.label}</span>
+      <span class="block-count">${block.habits.length} hábitos</span>
+      <span class="block-prog ${block.cls}">${blockDone}/${block.habits.length}</span>`;
+    section.appendChild(header);
+
+    const grid = document.createElement('div');
+    grid.className = 'habits-grid';
+
+    block.habits.forEach(h => {
+      const d = done.has(h.id);
+      const el = document.createElement('div');
+      el.className = 'hcard' + (d ? ' done' : '');
+      el.style.setProperty('--hc', h.c);
+      el.style.setProperty('--hbg', h.bg);
+      const streakDays = getStreak(h.id, state);
+      el.innerHTML = `
+        <div class="ht">
+          <div class="hico">${h.icon}</div>
+          <div class="hchk"><i class="ti ti-check"></i></div>
+        </div>
+        <div class="hname">${h.name}</div>
+        <div class="hstr">${d ? '✓ feito hoje' : '🔥 ' + streakDays + ' dias'}</div>`;
+      el.onclick = () => toggleHabit(h.id);
+      grid.appendChild(el);
+    });
+
+    section.appendChild(grid);
+    g.appendChild(section);
   });
+
   updateProgress(done.size);
 }
 
@@ -337,7 +399,6 @@ function toggleHabit(id) {
   const done = new Set(state.days[TODAY] || []);
   if (done.has(id)) done.delete(id); else done.add(id);
   state.days[TODAY] = [...done];
-  if (!state.streak) state.streak = 0;
   if (!state.best) state.best = 0;
   if (done.size > state.best) state.best = done.size;
   saveState(state);
@@ -346,10 +407,18 @@ function toggleHabit(id) {
 }
 
 function updateProgress(count) {
-  const pct = Math.round((count / 12) * 100);
+  const pct = Math.round((count / TOTAL) * 100);
   document.getElementById('pct').textContent = pct + '%';
   document.getElementById('pfill').style.width = pct + '%';
-  const msgs = ['Toque em cada hábito ao completar 💛','Ótimo começo, continue assim! 🌱','Você está no caminho! 💪','Mais da metade, incrível Lele! 🌸','Quase lá, força! ✨','Que dia poderoso! 🔥','Perfeito! Todos os 12 hábitos! 🏆'];
+  const msgs = [
+    'Toque em cada hábito ao completar 💛',
+    'Ótimo começo, continue assim! 🌱',
+    'Você está no caminho! 💪',
+    'Mais da metade, incrível Lele! 🌸',
+    'Quase lá, força! ✨',
+    'Que dia poderoso! 🔥',
+    'Perfeito! Todos os hábitos! 🏆'
+  ];
   const idx = Math.min(Math.floor(pct / 17), 6);
   document.getElementById('prog-msg').textContent = msgs[idx];
   document.getElementById('sv-today').textContent = count;
@@ -374,7 +443,7 @@ function calcStreak(state) {
   for (let i = 0; i < 365; i++) {
     const key = new Date(d.getTime() - i * 86400000).toISOString().slice(0, 10);
     const count = (state.days[key] || []).length;
-    if (count >= 6) streak++;
+    if (count >= 10) streak++;
     else break;
   }
   return streak;
@@ -414,7 +483,7 @@ function abrirKai(mensagem) {
   const state = getToday();
   const done = new Set(state.days[TODAY] || []);
   const names = [...done].map(id => HABITS.find(h => h.id === id)?.name).filter(Boolean);
-  const contexto = `Você é Kai, minha coach kaizen pessoal. Meus 12 hábitos são: gratidão+reiki+ho'oponopono, floral+alongamento+meditação, treino Iron Ice, áudio book, aula mestre, leitura, manga virtual, reflexão noturna, Win Hoff, agradecer+rezar, crochê/pintura/violão, e cuidar da Afrodite (minha tartaruga). Também escrevo o blog Entre-Fusos. Hoje completei ${done.size} de 12 hábitos${names.length ? ': ' + names.join(', ') : ''}. Me responda como Kai — calorosa, breve e encorajadora em português. ${mensagem}`;
+  const contexto = `Você é Kai, minha coach kaizen pessoal. Minha rotina tem 22 hábitos divididos em Manhã (acordar 5am, agradecer, floral+meditar+rezar+alongar, chá, curso de mestre, café, escutar livro, organizar casa, arrumar para esporte, treino/gelo), Tarde (Afrodite meditação nas pedras com as tartarugas, Wim Hof, soneca) e Noite (idiomas, crochê, leitura, mangá virtual, blog, cuidados, reflexão noturna, floral+meditar+rezar+alongar, dormir). Também escrevo o blog Entre-Fusos. Hoje completei ${done.size} de 22 hábitos${names.length ? ': ' + names.join(', ') : ''}. Me responda como Kai — calorosa, breve e encorajadora em português. ${mensagem}`;
   const url = 'https://claude.ai/new?q=' + encodeURIComponent(contexto);
   window.open(url, '_blank');
 }
@@ -426,9 +495,6 @@ function abrirKaiCustom() {
   input.value = '';
   abrirKai(txt);
 }
-
-function sendQ(txt) { abrirKai(txt); }
-function sendCoach() { abrirKaiCustom(); }
 
 /* ====== NOTAS ====== */
 function loadNotes() {
