@@ -270,29 +270,28 @@
 const BLOCKS = [
   {
     id: 'manha',
-    label: '🌅 Manhã — Meu Momento',
+    label: '🌅 Cedo — Meu Momento',
     cls: 'manha',
     habits: [
-      {id:1,  name:'Acordar às 5am',                      icon:'⏰', c:'#c9a84c', bg:'rgba(201,168,76,0.15)',   baseStreak:7},
-      {id:2,  name:'Agradecer pelo dia',                   icon:'✨', c:'#c9a84c', bg:'rgba(201,168,76,0.15)',   baseStreak:7},
-      {id:3,  name:'Floral / Meditar / Rezar / Alongar',   icon:'🌸', c:'#9b7fd4', bg:'rgba(155,127,212,0.15)', baseStreak:5},
-      {id:4,  name:'Chá',                                  icon:'🍵', c:'#4CAF7D', bg:'rgba(76,175,125,0.15)',  baseStreak:6},
-      {id:5,  name:'Curso de Mestre',                      icon:'🎓', c:'#d4a44c', bg:'rgba(212,164,76,0.15)',  baseStreak:3},
-      {id:6,  name:'Café da manhã',                        icon:'🥣', c:'#d4a44c', bg:'rgba(212,164,76,0.15)',  baseStreak:7},
-      {id:7,  name:'Escutar um livro',                     icon:'🎧', c:'#4cb8b8', bg:'rgba(76,184,184,0.15)',  baseStreak:4},
-      {id:8,  name:'Organizar a casa',                     icon:'🏡', c:'#4CAF7D', bg:'rgba(76,175,125,0.15)',  baseStreak:5},
-      {id:9,  name:'Arrumar para o esporte',               icon:'👟', c:'#5b9bd5', bg:'rgba(91,155,213,0.15)',  baseStreak:6},
-      {id:10, name:'Treino / Gelo',                        icon:'❄️', c:'#5b9bd5', bg:'rgba(91,155,213,0.15)',  baseStreak:7},
+      {id:1,  name:'Acordar às 5am',                       icon:'⏰', c:'#c9a84c', bg:'rgba(201,168,76,0.15)',   baseStreak:7},
+      {id:2,  name:'Agradecer pelo dia',                    icon:'✨', c:'#c9a84c', bg:'rgba(201,168,76,0.15)',   baseStreak:7},
+      {id:3,  name:'Respirar / Meditar / Orar',             icon:'🙏', c:'#9b7fd4', bg:'rgba(155,127,212,0.15)', baseStreak:5},
+      {id:23, name:'Alongar',                               icon:'🧘‍♀️', c:'#9b7fd4', bg:'rgba(155,127,212,0.15)', baseStreak:0},
+      {id:5,  name:'Curso de Mestre',                       icon:'🎓', c:'#d4a44c', bg:'rgba(212,164,76,0.15)',  baseStreak:3},
+      {id:7,  name:'Escutar um livro',                      icon:'🎧', c:'#4cb8b8', bg:'rgba(76,184,184,0.15)',  baseStreak:4},
+      {id:10, name:'Treino / Gelo',                         icon:'❄️', c:'#5b9bd5', bg:'rgba(91,155,213,0.15)',  baseStreak:7},
+      {id:8,  name:'Cuidar da casa',                        icon:'🏡', c:'#4CAF7D', bg:'rgba(76,175,125,0.15)',  baseStreak:5},
+      {id:24, name:'Skin care',                             icon:'🧴', c:'#d47b7b', bg:'rgba(212,123,123,0.15)', baseStreak:0},
     ]
   },
   {
     id: 'tarde',
-    label: '☀️ Tarde — Trabalho & Almoço',
+    label: '☀️ Almoço — Pausa Sagrada',
     cls: 'tarde',
     habits: [
-      {id:11, name:'Afrodite 🐢 — Meditação nas pedras',   icon:'🌊', c:'#4CAF7D', bg:'rgba(76,175,125,0.15)',  baseStreak:6},
-      {id:12, name:'Wim Hof',                              icon:'🌬️', c:'#4cb8b8', bg:'rgba(76,184,184,0.15)',  baseStreak:5},
-      {id:13, name:'Soneca',                               icon:'😴', c:'#7b5ea7', bg:'rgba(123,94,167,0.15)',  baseStreak:4},
+      {id:11, name:'Afrodite 🐢 — Meditação nas pedras',    icon:'🌊', c:'#4CAF7D', bg:'rgba(76,175,125,0.15)',  baseStreak:6},
+      {id:12, name:'Respiração',                            icon:'🌬️', c:'#4cb8b8', bg:'rgba(76,184,184,0.15)',  baseStreak:5},
+      {id:13, name:'Soneca',                                icon:'😴', c:'#7b5ea7', bg:'rgba(123,94,167,0.15)',  baseStreak:4},
     ]
   },
   {
@@ -300,36 +299,57 @@ const BLOCKS = [
     label: '🌙 Noite — Meu Momento',
     cls: 'noite',
     habits: [
-      {id:14, name:'Aula de idiomas',                      icon:'🗣️', c:'#d4a44c', bg:'rgba(212,164,76,0.15)',  baseStreak:5},
-      {id:15, name:'Crochê',                               icon:'🎨', c:'#d47b7b', bg:'rgba(212,123,123,0.15)', baseStreak:3},
-      {id:16, name:'Ler um livro',                         icon:'📖', c:'#4CAF7D', bg:'rgba(76,175,125,0.15)',  baseStreak:6},
-      {id:17, name:'Mangá Virtual',                        icon:'🎌', c:'#d47b7b', bg:'rgba(212,123,123,0.15)', baseStreak:2},
-      {id:18, name:'Escrever no blog',                     icon:'✍️', c:'#9b7fd4', bg:'rgba(155,127,212,0.15)', baseStreak:3},
-      {id:19, name:'Cuidados pessoais',                    icon:'🌺', c:'#d47b7b', bg:'rgba(212,123,123,0.15)', baseStreak:7},
-      {id:20, name:'Reflexão Noturna',                     icon:'🌙', c:'#7b5ea7', bg:'rgba(123,94,167,0.15)',  baseStreak:7},
-      {id:21, name:'Floral / Meditar / Rezar / Alongar',   icon:'🌸', c:'#9b7fd4', bg:'rgba(155,127,212,0.15)', baseStreak:5},
-      {id:22, name:'Dormir',                               icon:'🛌', c:'#7b5ea7', bg:'rgba(123,94,167,0.15)',  baseStreak:7},
+      {id:25, name:'Filme / Pintura / Crochê ou Livro',     icon:'🎨', c:'#d47b7b', bg:'rgba(212,123,123,0.15)', baseStreak:0},
+      {id:20, name:'Reflexão Noturna',                      icon:'🌙', c:'#7b5ea7', bg:'rgba(123,94,167,0.15)',  baseStreak:7},
+      {id:26, name:'Skincare com máquina',                  icon:'✨', c:'#d47b7b', bg:'rgba(212,123,123,0.15)', baseStreak:0},
     ]
   }
 ];
 
 const HABITS = BLOCKS.flatMap(b => b.habits);
 const TOTAL = HABITS.length;
+const HABIT_IDS = new Set(HABITS.map(h => h.id));
+// conta só os hábitos da rotina atual (ignora hábitos antigos que ficaram no histórico)
+function countCurrent(list) { return (list || []).filter(id => HABIT_IDS.has(id)).length; }
 
 const MOMENTS = [
   {time:'05:00',col:'#c9a84c',title:'Despertar sagrado',desc:'Acordar às 5am, abrir os olhos com gratidão. Pedir sabedoria, proteção e bênçãos para o dia.',hab:['Acordar às 5am','Agradecer pelo dia']},
-  {time:'05:30',col:'#9b7fd4',title:'Ritual do espírito',desc:'Tomar o floral, sentar no tapete. Rezar, meditar e alongar com presença e gentileza.',hab:['Floral / Meditar / Rezar / Alongar']},
-  {time:'06:30',col:'#4CAF7D',title:'Chá & aprendizado',desc:'Fazer o chá, escutar um livro enquanto organiza a casa. Corpo em movimento, mente nutrida.',hab:['Chá','Escutar um livro','Organizar a casa']},
-  {time:'07:30',col:'#d4a44c',title:'Mente & café',desc:'Estudar para o curso de mestre. Depois, tomar o café da manhã com calma.',hab:['Curso de Mestre','Café da manhã']},
-  {time:'08:30',col:'#5b9bd5',title:'Força & frio',desc:'Se arrumar para o esporte. Treino e banho de gelo — disciplina que fortalece corpo e mente.',hab:['Arrumar para o esporte','Treino / Gelo']},
-  {time:'12:00',col:'#4CAF7D',title:'Afrodite nas pedras',desc:'Hora do almoço: respiração Wim Hof e meditação no mar com as tartarugas. Sagrado.',hab:['Afrodite 🐢 — Meditação nas pedras','Wim Hof']},
+  {time:'05:30',col:'#9b7fd4',title:'Ritual do espírito',desc:'Respirar, meditar e orar com presença. Depois alongar o corpo com gentileza.',hab:['Respirar / Meditar / Orar','Alongar']},
+  {time:'06:30',col:'#d4a44c',title:'Mente em crescimento',desc:'Estudar para o curso de mestre e escutar um livro. Mente nutrida desde cedo.',hab:['Curso de Mestre','Escutar um livro']},
+  {time:'07:30',col:'#5b9bd5',title:'Força & frio',desc:'Treino e banho de gelo — disciplina que fortalece corpo e mente.',hab:['Treino / Gelo']},
+  {time:'09:00',col:'#4CAF7D',title:'Lar & pele',desc:'Cuidar da casa com carinho e fechar a manhã com o skin care.',hab:['Cuidar da casa','Skin care']},
+  {time:'12:00',col:'#4CAF7D',title:'Afrodite nas pedras',desc:'Hora do almoço: respiração e meditação no mar com as tartarugas. Sagrado.',hab:['Afrodite 🐢 — Meditação nas pedras','Respiração']},
   {time:'13:30',col:'#7b5ea7',title:'Soneca restauradora',desc:'Uma pausa para recarregar as energias antes da tarde.',hab:['Soneca']},
-  {time:'19:00',col:'#d4a44c',title:'Idiomas & criação',desc:'Aula de idiomas. Depois crochê, leitura, mangá ou escrever no blog — expressão e cultura.',hab:['Aula de idiomas','Crochê','Ler um livro','Mangá Virtual','Escrever no blog']},
-  {time:'21:30',col:'#7b5ea7',title:'Fechamento do ciclo',desc:'Cuidados pessoais, reflexão noturna, floral + meditação + alongar. Fechar o dia com gratidão.',hab:['Cuidados pessoais','Reflexão Noturna','Floral / Meditar / Rezar / Alongar','Dormir']},
+  {time:'19:00',col:'#d47b7b',title:'Momento criativo',desc:'Escolher o que o coração pedir: um filme, pintura, crochê ou um bom livro.',hab:['Filme / Pintura / Crochê ou Livro']},
+  {time:'21:30',col:'#7b5ea7',title:'Fechamento do ciclo',desc:'Reflexão noturna e skincare com a máquina. Fechar o dia com gratidão.',hab:['Reflexão Noturna','Skincare com máquina']},
 ];
 
 /* ====== ESTADO (localStorage) ====== */
-const TODAY = new Date().toISOString().slice(0,10);
+// Dia sempre no horário de Brasília (vira à meia-noite do Brasil, não às 21h)
+function dayKey(daysAgo = 0) {
+  const d = new Date(Date.now() - daysAgo * 86400000);
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit'
+  }).format(d); // formato AAAA-MM-DD
+}
+let TODAY = dayKey();
+
+// Pede ao navegador para não apagar os dados salvos
+try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch(e) {}
+
+// Se o app ficar aberto e passar da meia-noite, começa o novo dia sozinho
+function checkNewDay() {
+  const k = dayKey();
+  if (k !== TODAY) {
+    TODAY = k;
+    renderHabits();
+    renderMoments();
+    updateStatsPanel();
+  }
+}
+document.addEventListener('visibilitychange', () => { if (!document.hidden) checkNewDay(); });
+window.addEventListener('focus', checkNewDay);
+setInterval(checkNewDay, 60000);
 
 function loadState() {
   try { return JSON.parse(localStorage.getItem('kaizen_lele') || '{}'); } catch(e) { return {}; }
@@ -391,7 +411,7 @@ function renderHabits() {
     g.appendChild(section);
   });
 
-  updateProgress(done.size);
+  updateProgress(countCurrent([...done]));
 }
 
 function toggleHabit(id) {
@@ -400,7 +420,8 @@ function toggleHabit(id) {
   if (done.has(id)) done.delete(id); else done.add(id);
   state.days[TODAY] = [...done];
   if (!state.best) state.best = 0;
-  if (done.size > state.best) state.best = done.size;
+  const cnt = countCurrent([...done]);
+  if (cnt > state.best) state.best = cnt;
   saveState(state);
   renderHabits();
   updateStatsPanel();
@@ -427,9 +448,8 @@ function updateProgress(count) {
 function getStreak(habitId, state) {
   if (!state.days) return HABITS.find(h => h.id === habitId)?.baseStreak || 0;
   let streak = 0;
-  const d = new Date();
   for (let i = 0; i < 30; i++) {
-    const key = new Date(d.getTime() - i * 86400000).toISOString().slice(0, 10);
+    const key = dayKey(i);
     if (state.days[key] && state.days[key].includes(habitId)) streak++;
     else if (i > 0) break;
   }
@@ -439,11 +459,10 @@ function getStreak(habitId, state) {
 function calcStreak(state) {
   if (!state.days) return 0;
   let streak = 0;
-  const d = new Date();
   for (let i = 0; i < 365; i++) {
-    const key = new Date(d.getTime() - i * 86400000).toISOString().slice(0, 10);
-    const count = (state.days[key] || []).length;
-    if (count >= 10) streak++;
+    const key = dayKey(i);
+    const count = countCurrent(state.days[key]);
+    if (count >= 8) streak++;
     else break;
   }
   return streak;
@@ -483,7 +502,7 @@ function abrirKai(mensagem) {
   const state = getToday();
   const done = new Set(state.days[TODAY] || []);
   const names = [...done].map(id => HABITS.find(h => h.id === id)?.name).filter(Boolean);
-  const contexto = `Você é Kai, minha coach kaizen pessoal. Minha rotina tem 22 hábitos divididos em Manhã (acordar 5am, agradecer, floral+meditar+rezar+alongar, chá, curso de mestre, café, escutar livro, organizar casa, arrumar para esporte, treino/gelo), Tarde (Afrodite meditação nas pedras com as tartarugas, Wim Hof, soneca) e Noite (idiomas, crochê, leitura, mangá virtual, blog, cuidados, reflexão noturna, floral+meditar+rezar+alongar, dormir). Também escrevo o blog Entre-Fusos. Hoje completei ${done.size} de 22 hábitos${names.length ? ': ' + names.join(', ') : ''}. Me responda como Kai — calorosa, breve e encorajadora em português. ${mensagem}`;
+  const contexto = `Você é Kai, minha coach kaizen pessoal. Minha rotina tem ${TOTAL} hábitos divididos em Cedo (acordar 5am, agradecer, respirar+meditar+orar, alongar, curso de mestre, escutar livro, treino/gelo, cuidar da casa, skin care), Almoço (Afrodite meditação nas pedras com as tartarugas, respiração, soneca) e Noite (filme, pintura, crochê ou livro, reflexão noturna, skincare com máquina). Também escrevo o blog Entre-Fusos. Hoje completei ${countCurrent([...done])} de ${TOTAL} hábitos${names.length ? ': ' + names.join(', ') : ''}. Me responda como Kai — calorosa, breve e encorajadora em português. ${mensagem}`;
   const url = 'https://claude.ai/new?q=' + encodeURIComponent(contexto);
   window.open(url, '_blank');
 }
@@ -572,8 +591,8 @@ function toggleRec() {
 function updateStatsPanel() {
   const state = loadState();
   const streak = calcStreak(state);
-  const best = state.best || 0;
-  const done = (state.days && state.days[TODAY] ? state.days[TODAY].length : 0);
+  const best = Math.min(state.best || 0, TOTAL);
+  const done = (state.days && state.days[TODAY] ? countCurrent(state.days[TODAY]) : 0);
   document.getElementById('sv-streak').textContent = streak;
   document.getElementById('sv-today').textContent = done;
   document.getElementById('sv-best').textContent = best;
@@ -588,12 +607,11 @@ function renderWeek(state) {
   bars.innerHTML = ''; days.innerHTML = '';
   const WDAYS = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
   const weekData = [];
-  const now = new Date();
   for (let i = 6; i >= 0; i--) {
-    const d = new Date(now.getTime() - i * 86400000);
-    const key = d.toISOString().slice(0, 10);
-    const count = (state.days && state.days[key] ? state.days[key].length : 0);
-    weekData.push({count, day: WDAYS[d.getDay()], isToday: i === 0});
+    const key = dayKey(i);
+    const d = new Date(key + 'T12:00:00Z');
+    const count = (state.days && state.days[key] ? countCurrent(state.days[key]) : 0);
+    weekData.push({count, day: WDAYS[d.getUTCDay()], isToday: i === 0});
   }
   const max = Math.max(...weekData.map(w => w.count), 1);
   weekData.forEach(w => {
@@ -616,7 +634,7 @@ function renderBreakdown(state) {
   HABITS.forEach(h => {
     let count = 0;
     for (let i = 0; i < 7; i++) {
-      const key = new Date(now.getTime() - i * 86400000).toISOString().slice(0, 10);
+      const key = dayKey(i);
       if (state.days && state.days[key] && state.days[key].includes(h.id)) count++;
     }
     const pct = Math.round((count / 7) * 100);
